@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- node
+branches:
+  only:
+  - master
+  - "/^greenkeeper.*$/"
+notifications:
+  email:
+    recipients:
+    - plastikfan@zoho.com
+    on_success: never
+    on_failure: always
+after_script: npm run coveralls
+env:
+  global:
+    secure: YDsNhs+Rl6YQqzSKfTAZQ2U5yYVmvghz556Or0oaJoLbidF0uzGTS2GUbvbb1xiaaDADV2rfx9/aQsugsYtsU60OsAq/+8XyrXU6aarb0OM9IRydeDhFkrXnvwCEBZWYU9ssjwn5ipqlKO5s5zZLMN/huKveYIRADKal087RUOXllSfgkWEWV3VSNt8opBpIqbNGt0IfpC2iDbeBFqPJPv1Mk1XtJHXcPknATUdcGNJu6E3/3m24UaGwTXWzbt/wjPlvbs5zjzvBCZn1yhsFMLMhlrY7UZzeNkoXJBxQSC6sFVSh37I2StwdgwIs2F0mtBpldD95u5Iwxgcfcwbfgy+DOPd4XkXcspbHhHNxS030s6ghBM5tUjjoyEdSe8I9FmOBUDGLyV+cCvSDCVmxcvF1F/wmwJ5BUOwJL13xxCs0Bzy3hJDihEfwsexgpwQxBGz8z0O9KpuzLFNxt567XcrAS6cZ/DWY+53HKcKu2DiTqvDYccX4ENRXBVZQik73kmKPPJO2RcyNP7iMbSU0eCeNS93LpTMt2Va+lWOiysw/rHY+TVJBinokp7EB7CVR5ISRKM0eBAirm/6VtmZczh+tVY18ek8mnxWFVoyholK4QhSY71u+GFUXtTP+TA1pWsThZa9otDsYGlp3ERFbFTl7kjIqp4oNST1RetHnPLA=
