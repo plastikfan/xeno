@@ -7,7 +7,7 @@ module.exports = env => {
   const { ifProduction } = getIfUtils(env);
   const mode = ifProduction('production', 'development');
 
-  console.log(`>>> unicorns Source Code Webpack Environment; [mode: ${env.mode}]`);
+  console.log(`>>> xeno Source Code Webpack Environment; [mode: ${env.mode}]`);
 
   return {
     mode: mode,
@@ -45,8 +45,8 @@ module.exports = env => {
       ignored: /node_modules/
     },
     output: {
-      filename: 'unicorns-bundle.js',
-      sourceMapFilename: 'unicorns-bundle.js.map',
+      filename: 'xeno-bundle.js',
+      sourceMapFilename: 'xeno-bundle.js.map',
       path: path.join(__dirname, 'dist'),
       libraryTarget: 'commonjs'
     },

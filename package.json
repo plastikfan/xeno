@@ -1,7 +1,7 @@
 {
-  "name": "unicorns-ts",
+  "name": "xeno",
   "version": "0.0.1",
-  "description": "Starter project for Node-JS Typescript repositories",
+  "description": "Ecosystem type only library that declares types for xml/regular-expression based File System",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist && rimraf coverage",
@@ -15,7 +15,7 @@
     "__b:publish": "npm run clean && webpack -d --env.mode production --config webpack.config.src.js",
     "__b:dev:src": "webpack -d --env.mode development --config webpack.config.src.js",
     "__b:dev:test": "webpack -d --env.mode development --config webpack.config.test.js",
-    "exec": "node ./dist/unicorns-bundle.js",
+    "exec": "node ./dist/xeno-bundle.js",
     "lint": "(npx semistandard --verbose | npx snazzy) && npx eslint -c .eslintrc.js \"./lib/**/*.ts\" \"./tests/**/*.ts\" --no-error-on-unmatched-pattern",
     "fix": "npx eslint -c .eslintrc.js \"./lib/**/*.ts \"./tests/**/*.ts\" --fix --no-error-on-unmatched-pattern",
     "watch": "npm run clean && webpack --watch --env.mode development --config webpack.config.src.js",
@@ -25,8 +25,6 @@
     "check": "npm run audit && npm run dep && npm outdated --depth 0",
     "validate": "npm run lint && npm run build:p && npm run t",
     "cm": "npx git-cz",
-    "nyc": "nyc mocha",
-    "coveralls": "npm run nyc && nyc report --reporter=text-lcov | coveralls",
     "prepare": "echo '---> [STEP: prepare]:' && npm run __b:publish",
     "prepublishOnly": "echo '---> [STEP: prepublishOnly]:' npm run build:p",
     "preversion": "echo '---> [STEP: preversion]:' && npm run lint",
@@ -53,7 +51,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/plastikfan/unicorns-ts.git"
+    "url": "git+https://github.com/plastikfan/xeno.git"
   },
   "keywords": [
     "cli"
@@ -61,9 +59,9 @@
   "author": "plastikfan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/plastikfan/unicorns-ts/issues"
+    "url": "https://github.com/plastikfan/xeno/issues"
   },
-  "homepage": "https://github.com/plastikfan/unicorns-ts#readme",
+  "homepage": "https://github.com/plastikfan/xeno#readme",
   "dependencies": {
     "@types/node": "^13.7.6"
   },
