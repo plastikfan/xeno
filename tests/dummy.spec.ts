@@ -1,6 +1,9 @@
 
 import { expect } from 'chai';
-import { mythical } from '../lib/index';
+
+function mythical (message: string): string {
+  return `=== ${message} ===`;
+}
 
 describe('xeno; no implementation to test', () => {
   context('What is the difference between a carrot and a unicorn', () => {
