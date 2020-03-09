@@ -1,4 +1,4 @@
-# :hammer: \<Xeno\> [UNDER CONSTRUCTION :hammer:]
+# :hammer: \<xiberia\> [UNDER CONSTRUCTION :hammer:]
 
 Starter project for Node-JS Typescript library repositories.
 

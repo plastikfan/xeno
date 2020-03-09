@@ -1,5 +1,5 @@
 {
-  "name": "xeno",
+  "name": "xiberia",
   "version": "0.0.1",
   "description": "Ecosystem type only library that declares types for xml/regular-expression based File System",
   "main": "index.js",
@@ -15,7 +15,7 @@
     "__b:publish": "npm run clean && webpack -d --env.mode production --config webpack.config.src.js",
     "__b:dev:src": "webpack -d --env.mode development --config webpack.config.src.js",
     "__b:dev:test": "webpack -d --env.mode development --config webpack.config.test.js",
-    "exec": "node ./dist/xeno-bundle.js",
+    "exec": "node ./dist/xiberia-bundle.js",
     "lint": "(npx semistandard --verbose | npx snazzy) && npx eslint -c .eslintrc.js \"./lib/**/*.ts\" \"./tests/**/*.ts\" --no-error-on-unmatched-pattern",
     "fix": "npx eslint -c .eslintrc.js \"./lib/**/*.ts \"./tests/**/*.ts\" --fix --no-error-on-unmatched-pattern",
     "watch": "npm run clean && webpack --watch --env.mode development --config webpack.config.src.js",
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/plastikfan/xeno.git"
+    "url": "git+https://github.com/plastikfan/xiberia.git"
   },
   "keywords": [
     "cli"
@@ -41,9 +41,9 @@
   "author": "plastikfan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/plastikfan/xeno/issues"
+    "url": "https://github.com/plastikfan/xiberia/issues"
   },
-  "homepage": "https://github.com/plastikfan/xeno#readme",
+  "homepage": "https://github.com/plastikfan/xiberia#readme",
   "dependencies": {
     "@types/node": "^13.9.0",
     "@types/yargs": "^15.0.4"

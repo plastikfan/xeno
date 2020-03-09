@@ -7,7 +7,7 @@ module.exports = env => {
   const { ifProduction } = getIfUtils(env);
   const mode = ifProduction('production', 'development');
 
-  console.log(`>>> xeno Test Code Webpack Environment; [mode: ${env.mode}]`);
+  console.log(`>>> xiberia Test Code Webpack Environment; [mode: ${env.mode}]`);
 
   return {
     mode: mode,
@@ -49,8 +49,8 @@ module.exports = env => {
       ignored: /node_modules/
     },
     output: {
-      filename: 'xeno-test-bundle.js',
-      sourceMapFilename: 'xeno-test-bundle.js.map',
+      filename: 'xiberia-test-bundle.js',
+      sourceMapFilename: 'xiberia-test-bundle.js.map',
       path: path.resolve(__dirname, 'dist'),
       libraryTarget: 'commonjs'
     },
