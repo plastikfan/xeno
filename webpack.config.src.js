@@ -11,7 +11,7 @@ module.exports = env => {
 
   return {
     mode: mode,
-    entry: ['./lib/index.ts'],
+    entry: ['./index.ts'],
     target: 'node',
     externals: [nodeExternals()],
     module: {

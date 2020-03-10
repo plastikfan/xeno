@@ -1,12 +1,12 @@
 {
-  "extends": "../tsconfig.base",
+  "extends": "./tsconfig.base",
   "compilerOptions": {
     "types": [
       "node"
     ],
   },
   "include": [
-    "../lib/**/*"
+    "./index.ts"
   ],
   "exclude": [
     "node_modules",
