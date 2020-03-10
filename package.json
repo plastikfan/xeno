@@ -18,7 +18,7 @@
     "fix": "npx eslint -c .eslintrc.js \"./**/*.ts --fix --no-error-on-unmatched-pattern",
     "watch": "npm run clean && webpack --watch --env.mode development --config webpack.config.src.js",
     "audit": "npm audit --skip-unused",
-    "dep": "depcheck --ignores 'xpath,webpack-cli,sinon,@commitlint/cli,@commitlint/config-conventional,precommit-hook,shebang-loader,raw-loader'",
+    "dep": "depcheck --ignores 'webpack-cli,@commitlint/cli,@commitlint/config-conventional,precommit-hook,shebang-loader,raw-loader'",
     "check": "npm run audit && npm run dep && npm outdated --depth 0",
     "validate": "npm run lint && npm run build:p",
     "cm": "npx git-cz",
@@ -48,19 +48,11 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
-    "@istanbuljs/nyc-config-typescript": "^1.0.0",
-    "@types/chai": "^4.2.10",
-    "@types/dirty-chai": "^2.0.2",
-    "@types/mocha": "^7.0.2",
-    "@types/sinon": "^7.5.1",
-    "@types/sinon-chai": "^3.2.3",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
-    "chai": "^4.2.0",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "depcheck": "^0.9.2",
-    "dirty-chai": "^2.0.1",
     "eslint": "^6.8.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.0",
@@ -69,12 +61,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "json-loader": "^0.5.7",
-    "mocha": "^7.1.0",
     "precommit-hook": "^3.0.0",
     "raw-loader": "^4.0.0",
     "rimraf": "^3.0.0",
-    "sinon": "^9.0.0",
-    "sinon-chai": "^3.4.0",
     "snazzy": "^8.0.0",
     "source-map-support": "^0.5.16",
     "ts-loader": "^6.2.1",
@@ -94,10 +83,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "semistandard": {
-    "env": [
-      "mocha"
-    ]
   }
 }
