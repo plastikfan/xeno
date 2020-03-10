@@ -1,6 +1,6 @@
 {
   "name": "xiberia",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Ecosystem type only library that declares types for xml/regular-expression based File System",
   "main": "index.js",
   "types": "./dist/index.d.ts",
