@@ -20,7 +20,7 @@
       "dom"
     ],
     "types": [
-      "node"
+      "node", "yargs"
     ],
   },
   "include": [
@@ -28,7 +28,6 @@
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "../**/*.spec.ts"
+    "dist"
   ]
 }

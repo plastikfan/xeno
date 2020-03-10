@@ -7,9 +7,9 @@ import * as yargs from 'yargs';
  * @description Yargs fail handler
  *
  * @export
- * @interface IFailHandler
+ * @interface IYargsFailHandler
  */
-export interface IFailHandler {
+export interface IYargsFailHandler {
   (msg: string, err: Error, inst: yargs.Argv, command: any): yargs.Argv;
 }
 
@@ -86,7 +86,7 @@ export interface IAeYargsInternalBuildHandlers {
   onOption: IAeYargsOptionHandler;
   onBeforeCommand: IAeYargsBeforeCommandHandler;
   onAfterCommand: IAeYargsAfterCommandHandler;
-  onFail: IFailHandler;
+  onFail: IYargsFailHandler;
 }
 
 export type IAeYargsBuildHandlers = Partial<IAeYargsInternalBuildHandlers>;
@@ -370,7 +370,7 @@ export type StringIndexableObj = { [key: string]: any };
 
 // This abstraction, yet to be fully defined
 //
-export type JsonObject<S> = {}; // somehow, related to IJsonConversionSchema; use a type guard function
+// export type JsonObject<S> = {}; // somehow, related to IJsonConversionSchema; use a type guard function
 
 /**
  * @description Builder for all commands defined in zenobia config.

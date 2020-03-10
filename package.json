@@ -4,26 +4,23 @@
   "description": "Ecosystem type only library that declares types for xml/regular-expression based File System",
   "main": "index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "clean": "rimraf dist && rimraf coverage",
+    "clean": "rimraf dist/*",
     "test": "echo 'Type only library, no tests to run'",
-    "build": "npm run build:d",
-    "build:d": "npm run clean && npm run __b:dev:src",
-    "build:p": "npm run clean && npm run __b:prod:src",
-    "__b:prod:src": "webpack -d --env.mode production --config webpack.config.src.js",
-    "__b:publish": "npm run clean && webpack -d --env.mode production --config webpack.config.src.js",
-    "__b:dev:src": "webpack -d --env.mode development --config webpack.config.src.js",
-    "exec": "node ./dist/xiberia-bundle.js",
+    "build": "tsc --project ./tsconfig.src.json",
+    "__b:publish": "npm run clean && npm run build",
     "lint": "(npx semistandard --verbose | npx snazzy) && npx eslint -c .eslintrc.js \"./**/*.ts\" --no-error-on-unmatched-pattern",
     "fix": "npx eslint -c .eslintrc.js \"./**/*.ts --fix --no-error-on-unmatched-pattern",
-    "watch": "npm run clean && webpack --watch --env.mode development --config webpack.config.src.js",
     "audit": "npm audit --skip-unused",
     "dep": "depcheck --ignores 'webpack-cli,@commitlint/cli,@commitlint/config-conventional,precommit-hook,shebang-loader,raw-loader'",
     "check": "npm run audit && npm run dep && npm outdated --depth 0",
-    "validate": "npm run lint && npm run build:p",
+    "validate": "npm run lint && npm run build",
     "cm": "npx git-cz",
     "prepare": "echo '---> [STEP: prepare]:' && npm run __b:publish",
-    "prepublishOnly": "echo '---> [STEP: prepublishOnly]:' npm run build:p",
+    "prepublishOnly": "echo '---> [STEP: prepublishOnly]:' && npm run build",
     "preversion": "echo '---> [STEP: preversion]:' && npm run lint",
     "version": "echo '---> [STEP: version]'",
     "postversion": "echo '---> [STEP: postversion]'"
@@ -68,11 +65,7 @@
     "source-map-support": "^0.5.16",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.5.4",
-    "typescript": "^3.8.3",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.10",
-    "webpack-config-utils": "^2.3.1",
-    "webpack-node-externals": "^1.7.2"
+    "typescript": "^3.8.3"
   },
   "pre-commit": [
     "lint",
