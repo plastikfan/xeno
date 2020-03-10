@@ -1,4 +1,99 @@
-// ============================================= XML/JSON Conversion (Jaxom) ===
+
+import * as yargs from 'yargs';
+
+// ============================== [api/yargs] === Yargs API Builder (Aergia) ===
+
+/**
+ * @description Yargs fail handler
+ *
+ * @export
+ * @interface IYargsFailHandler
+ */
+export interface IYargsFailHandler {
+  (msg: string, err: Error, inst: yargs.Argv, command: any): yargs.Argv;
+}
+
+/**
+ * @description Represents the default handling of command options. Basically the same as
+ * IDefaultAeYargsOptionHandler except for callback parameter, which of course is not required.
+ *
+ * @export
+ * @interface IDefaultAeYargsOptionCallback
+ */
+export interface IDefaultAeYargsOptionCallback {
+  (yin: yargs.Argv,
+    optionName: string,
+    optionDef: { [key: string]: any },
+    positional: boolean): yargs.Argv;
+}
+
+/**
+ * @description The handler that the user passes into the builder. One of it's parameters is a
+ * callback that the builder provides. The client should call this default callback in addition
+ * to performing custom functionality.
+ *
+ * @export
+ * @interface IAeYargsOptionHandler
+ */
+export interface IAeYargsOptionHandler {
+  (yin: yargs.Argv, optionName: string, optionDef: { [key: string]: any },
+    positional: boolean,
+    adaptedCommand: { [key: string]: any },
+    callback: IDefaultAeYargsOptionCallback): yargs.Argv;
+}
+
+/**
+ * @description Invoked just prior to command creation
+ *
+ * @export
+ * @interface IAeYargsBeforeCommandHandler
+ */
+export interface IAeYargsBeforeCommandHandler {
+  (yin: yargs.Argv, commandDescription: string, helpDescription: string,
+    adaptedCommand: { [key: string]: any }): yargs.Argv;
+}
+
+/**
+ * @description Invoked just after command creation
+ *
+ * @export
+ * @interface IAeYargsAfterCommandHandler
+ */
+export interface IAeYargsAfterCommandHandler {
+  (yin: yargs.Argv): yargs.Argv;
+}
+
+/**
+ * @description Represents the default handling of commands. Basically the same as
+ * IAeYargsCommandHandler except for callback parameter, which of course is not required.
+ *
+ * @export
+ * @interface IDefaultAeYargsCommandCallback
+ */
+export interface IDefaultAeYargsCommandCallback {
+  (yin: yargs.Argv,
+    commandName: string,
+    commandDef: { [key: string]: any }): yargs.Argv;
+}
+
+/**
+ * @description Collection of handler functions
+ *
+ * @export
+ * @interface IAeYargsBuildHandlers
+ */
+export interface IAeYargsInternalBuildHandlers {
+  onOption: IAeYargsOptionHandler;
+  onBeforeCommand: IAeYargsBeforeCommandHandler;
+  onAfterCommand: IAeYargsAfterCommandHandler;
+  onFail: IYargsFailHandler;
+}
+
+export type IAeYargsBuildHandlers = Partial<IAeYargsInternalBuildHandlers>;
+
+// -----------------------------------------------------------------------------
+
+// =================== [json-xml-conversion] === XML/JSON Conversion (Jaxom) ===
 
 /**
  * @description Schema to provide a description of the cli being built
@@ -224,6 +319,95 @@ export interface ISpecService {
  */
 export interface IConverter {
   build(elementNode: Node, parseInfo: IParseInfo): any;
+}
+
+// ===================== [xpath-selectors] === XML/JSON Conversion (Zenobia) ===
+
+export type NullableNode = Node | null;
+export type Nodes = Node | Node[];
+
+/**
+ * @description xpath selector function
+ *
+ * @export
+ * @interface ISelect
+ */
+export interface ISelect {
+  (e: string, doc?: Node, single?: boolean): Nodes;
+}
+
+/**
+ * @description xpath selector function to select a unique element by an identifying
+ * attribute.
+ *
+ * @export
+ * @interface ISelectById
+ */
+export interface ISelectById {
+  (elementName: string, id: string, name: string, parentNode: Node): NullableNode;
+}
+
+/**
+ * @description Collection of xpath selector functions.
+ *
+ * @export
+ * @interface ISelectors
+ */
+export interface ISelectors {
+  select: ISelect;
+  selectById: ISelectById;
+}
+
+// -----------------------------------------------------------------------------
+
+// =================================================== Dynamic CLI (Zenobia) ===
+
+// Eventually, StringIndexableObj should be discarded and replaced by a generic
+// type (perhaps IZenaElement), where the template argument, let's say S, represents
+// the schema (jsonXml.IJsonConversionSchema)
+//
+export type StringIndexableObj = { [key: string]: any };
+
+// This abstraction, yet to be fully defined
+//
+// export type JsonObject<S> = {}; // somehow, related to IJsonConversionSchema; use a type guard function
+
+/**
+ * @description Builder for all commands defined in zenobia config.
+ *
+ * @export
+ * @interface ICommander
+ */
+export interface ICommander {
+  buildNamedCommand(commandName: string, commandsNode: Node): StringIndexableObj[];
+  buildCommands(commandsNode: Node): StringIndexableObj[];
+}
+
+/**
+ *
+ * @export
+ * @interface ICommanderFactory
+ */
+export interface ICommanderFactory {
+  (converter: IConverter, specSvc: ISpecService, parseInfo: IParseInfo,
+    xpath: ISelectors): ICommander;
+}
+
+/**
+ *
+ *
+ * @export
+ * @interface IDynamicCli
+ * @template C: represents the cli interface as defined by the user
+ * @template I: represent the cli API being used
+ */
+export interface IDynamicCli<C, I> {
+  load(applicationConfigPath: string): string;
+  peek(processArgv?: string[]): string;
+  create(): ICommander;
+  build(xmlContent: string, converter: IConverter, processArgv?: string[]): I;
+  argv(): C;
+  instance: I;
 }
 
 // -----------------------------------------------------------------------------

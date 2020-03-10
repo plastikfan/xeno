@@ -18,6 +18,16 @@
       "es2015",
       "es6",
       "dom"
-    ]
-  }
+    ],
+    "types": [
+      "node", "yargs"
+    ],
+  },
+  "include": [
+    "./index.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
