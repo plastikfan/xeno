@@ -3,17 +3,17 @@
   "version": "0.0.2",
   "description": "Ecosystem type only library that declares types for xml/regular-expression based File System",
   "main": "index.js",
-  "types": "./dist/index.d.ts",
+  "types": "index.d.ts",
   "files": [
-    "dist"
+    "index.d.ts", "index.js", "index.js.map"
   ],
   "scripts": {
-    "clean": "rimraf dist/*",
+    "clean": "rimraf index.d.ts index.js index.js.map",
     "test": "echo 'Type only library, no tests to run'",
     "build": "tsc --project ./tsconfig.src.json",
     "__b:publish": "npm run clean && npm run build",
-    "lint": "(npx semistandard --verbose | npx snazzy) && npx eslint -c .eslintrc.js \"./**/*.ts\" --no-error-on-unmatched-pattern",
-    "fix": "npx eslint -c .eslintrc.js \"./**/*.ts --fix --no-error-on-unmatched-pattern",
+    "lint": "(npx semistandard --verbose | npx snazzy) && npx eslint -c .eslintrc.js \"./index.ts\" --no-error-on-unmatched-pattern",
+    "fix": "npx eslint -c .eslintrc.js \"./index.ts\" --fix --no-error-on-unmatched-pattern",
     "audit": "npm audit --skip-unused",
     "dep": "depcheck --ignores 'webpack-cli,@commitlint/cli,@commitlint/config-conventional,precommit-hook,shebang-loader,raw-loader'",
     "check": "npm run audit && npm run dep && npm outdated --depth 0",

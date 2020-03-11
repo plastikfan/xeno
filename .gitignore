@@ -65,3 +65,7 @@ dist/
 
 .DS_Store
 Thumbs.db
+
+index.d.ts
+index.js
+index.js.map
