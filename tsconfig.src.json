@@ -10,8 +10,6 @@
     "strictNullChecks": true,
     "target": "es5",
     "declaration": true,
-    "declarationDir": "./dist",
-    "outDir": "./dist",
     "diagnostics": true,
     "lib": [
       "es5",
