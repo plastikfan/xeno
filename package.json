@@ -1,11 +1,13 @@
 {
   "name": "xiberia",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ecosystem type only library that declares types for xml/regular-expression based File System",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
-    "index.d.ts", "index.js", "index.js.map"
+    "index.d.ts",
+    "index.js",
+    "index.js.map"
   ],
   "scripts": {
     "clean": "rimraf index.d.ts index.js index.js.map",
