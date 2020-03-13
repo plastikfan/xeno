@@ -1,6 +1,24 @@
 
 import * as yargs from 'yargs';
 
+/**
+ * @description JSON object representation
+ *
+ * @export
+ * @type PlainObject
+ */
+export type PlainObject = {
+  // Eventually, PlainObject should be discarded and replaced by a generic
+  // type (perhaps IZenaElement), where the template argument, let's say S, represents
+  // the schema (jsonXml.IJsonConversionSchema)
+  //
+  [_key: string]: any
+}
+
+// This abstraction, yet to be fully defined
+//
+// export type JsonObject<S> = {}; // somehow, related to IJsonConversionSchema; use a type guard function
+
 // ============================== [api/yargs] === Yargs API Builder (Aergia) ===
 
 /**
@@ -23,7 +41,7 @@ export interface IYargsFailHandler {
 export interface IDefaultAeYargsOptionCallback {
   (yin: yargs.Argv,
     optionName: string,
-    optionDef: { [key: string]: any },
+    optionDef: PlainObject,
     positional: boolean): yargs.Argv;
 }
 
@@ -36,9 +54,9 @@ export interface IDefaultAeYargsOptionCallback {
  * @interface IAeYargsOptionHandler
  */
 export interface IAeYargsOptionHandler {
-  (yin: yargs.Argv, optionName: string, optionDef: { [key: string]: any },
+  (yin: yargs.Argv, optionName: string, optionDef: PlainObject,
     positional: boolean,
-    adaptedCommand: { [key: string]: any },
+    adaptedCommand: PlainObject,
     callback: IDefaultAeYargsOptionCallback): yargs.Argv;
 }
 
@@ -50,7 +68,7 @@ export interface IAeYargsOptionHandler {
  */
 export interface IAeYargsBeforeCommandHandler {
   (yin: yargs.Argv, commandDescription: string, helpDescription: string,
-    adaptedCommand: { [key: string]: any }): yargs.Argv;
+    adaptedCommand: PlainObject): yargs.Argv;
 }
 
 /**
@@ -73,7 +91,7 @@ export interface IAeYargsAfterCommandHandler {
 export interface IDefaultAeYargsCommandCallback {
   (yin: yargs.Argv,
     commandName: string,
-    commandDef: { [key: string]: any }): yargs.Argv;
+    commandDef: PlainObject): yargs.Argv;
 }
 
 /**
@@ -90,6 +108,47 @@ export interface IAeYargsInternalBuildHandlers {
 }
 
 export type IAeYargsBuildHandlers = Partial<IAeYargsInternalBuildHandlers>;
+
+/**
+ * @description Represents the main interface for building a Yargs CLI.
+ *
+ * @export
+ * @interface IYargsApiBuilder
+ */
+export interface IYargsApiBuilder {
+  /**
+   * @description: build a single command.
+   *
+   * @param {PlainObject} command: JSON object containing yargs specific property information
+   * required to build a yargs command.
+   * @param {IAeYargsOptionHandler} [optionHandler] Handler function that is called every time yargs
+   * encounters an option specifier. This handler can will override any handler that is provided
+   * at construction time. The handler can augment the default behaviour or by pass it completely
+   * by not calling the default handler (callback: IDefaultAeYargsOptionCallback).
+   *
+   * @returns {yargs.Argv}
+   * @memberof IYargsApiBuilder
+   */
+  buildCommand(command: PlainObject, optionHandler?: IAeYargsOptionHandler)
+    : yargs.Argv;
+
+  /**
+   * @description: builds all the command defined in the schema ('paths/collective').
+   *
+   * @param {PlainObject} container
+   * @param {IAeYargsOptionHandler} [optionHandler] Handler function that is called every time yargs
+   * encounters an option specifier. This handler can will override any handler that is provided
+   * at construction time. The handler can augment the default behaviour or by pass it completely
+   * by not calling the default handler (callback: IDefaultAeYargsOptionCallback)
+   *
+   * @returns {yargs.Argv}
+   * @memberof IYargsApiBuilder
+   */
+  buildAllCommands(container: PlainObject, optionHandler?: IAeYargsOptionHandler)
+    : yargs.Argv;
+
+  go(instance: yargs.Argv): PlainObject
+}
 
 // -----------------------------------------------------------------------------
 
@@ -362,16 +421,6 @@ export interface ISelectors {
 
 // =================================================== Dynamic CLI (Zenobia) ===
 
-// Eventually, StringIndexableObj should be discarded and replaced by a generic
-// type (perhaps IZenaElement), where the template argument, let's say S, represents
-// the schema (jsonXml.IJsonConversionSchema)
-//
-export type StringIndexableObj = { [key: string]: any };
-
-// This abstraction, yet to be fully defined
-//
-// export type JsonObject<S> = {}; // somehow, related to IJsonConversionSchema; use a type guard function
-
 /**
  * @description Builder for all commands defined in zenobia config.
  *
@@ -379,8 +428,8 @@ export type StringIndexableObj = { [key: string]: any };
  * @interface ICommander
  */
 export interface ICommander {
-  buildNamedCommand(commandName: string, commandsNode: Node): StringIndexableObj[];
-  buildCommands(commandsNode: Node): StringIndexableObj[];
+  buildNamedCommand(commandName: string, commandsNode: Node): PlainObject[];
+  buildCommands(commandsNode: Node): PlainObject[];
 }
 
 /**
