@@ -57,6 +57,43 @@ class HandlersClientAsClass {
   }
 }
 
+interface IXiberiaCliCore {
+  shape: string;
+  quantity: number;
+}
+
+interface IXiberiaCli extends xiberia.IYargsArgumentsCli, IXiberiaCliCore { }
+
+class XiberiaFakeCli implements xiberia.IDynamicCli<IXiberiaCli, yargs.Argv> {
+  constructor (private defaultCommand: string, private positionalArguments: string[]) { }
+
+  load (applicationConfigPath: string): string {
+    return 'Method not implemented.';
+  }
+
+  peek (processArgv?: string[]): string {
+    // argv._[0]
+    //
+    const commandName = processArgv ? processArgv.slice(2)[0] : this.defaultCommand;
+    return commandName.startsWith('-') || this.positionalArguments.includes(commandName)
+      ? this.defaultCommand : commandName;
+  }
+
+  create (): xiberia.ICommander {
+    throw new Error('Method not implemented.');
+  }
+
+  build (xmlContent: string, converter: xiberia.IConverter, processArgv?: string[]): yargs.Argv {
+    throw new Error('Method not implemented.');
+  }
+
+  argv (): IXiberiaCli {
+    return this.instance.argv as unknown as IXiberiaCli;
+  }
+
+  instance: yargs.Argv;
+}
+
 describe('index', () => {
   context('IDefaultAeYargsOptionCallback', () => {
     it('can be invoked', () => {
@@ -130,6 +167,13 @@ describe('index', () => {
 
       const handlerClient = new HandlersClientAsClass(handlers);
       handlerClient.invoke();
+    });
+  });
+
+  context('IDynamicCli', () => {
+    it('can be instantiated', () => {
+      const xiberiaCli = new XiberiaFakeCli('get', ['source']);
+      xiberiaCli.peek(['get', '--shape', 'triangle', '--quantity', '3']);
     });
   });
 });

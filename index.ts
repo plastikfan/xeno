@@ -459,4 +459,21 @@ export interface IDynamicCli<C, I> {
   instance: I;
 }
 
+/**
+ * `@description The API interface for Yargs
+ *
+ * @export
+ * @interface IYargsArgumentsCli
+ */
+export interface IYargsArgumentsCli {
+  [x: string]: unknown;
+  _: string[] | string;
+  $0: string;
+}
+
+export interface IArgumentInfo {
+  defaultCommand?: string;
+  positionalArguments?: string[];
+}
+
 // -----------------------------------------------------------------------------
