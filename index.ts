@@ -433,6 +433,8 @@ export interface ICommander {
 }
 
 /**
+ * @description factory interface which creates a commander (component that can build a cli
+ * from xml configuration).
  *
  * @export
  * @interface ICommanderFactory
@@ -443,7 +445,7 @@ export interface ICommanderFactory {
 }
 
 /**
- *
+ * @description The dynamic cli interface
  *
  * @export
  * @interface IDynamicCli
@@ -471,6 +473,12 @@ export interface IYargsArgumentsCli {
   $0: string;
 }
 
+/**
+ * @description Additional argument info which describes the dynamic cli
+ *
+ * @export
+ * @interface IArgumentInfo
+ */
 export interface IArgumentInfo {
   defaultCommand?: string;
   positionalArguments?: string[];
