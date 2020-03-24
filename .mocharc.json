@@ -1,0 +1,5 @@
+{
+  "spec": "index.spec.ts",
+  "full-trace": true,
+  "require": ["ts-node/register", "source-map-support/register"]
+}

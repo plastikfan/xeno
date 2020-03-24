@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "target": "es5",
+    "declaration": true,
+    "diagnostics": true,
+    "lib": [
+      "es5",
+      "es2015",
+      "es6",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "yargs",
+      "mocha"
+    ],
+  },
+  "include": [
+    "./index.spec.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}
