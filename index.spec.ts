@@ -1,7 +1,10 @@
+import { use, expect } from 'chai';
 import * as yargs from 'yargs';
 import * as xiberia from './index';
+import dirtyChai = require('dirty-chai');
+use(dirtyChai);
 
-// "index" tests assets
+// "index" tests assets. NB: tests defined here are not designed to test any implementation
 //
 
 function DefaultAeYargsCommandCallback (yin: yargs.Argv,
@@ -21,7 +24,7 @@ function AeYargsOptionHandler (yin: yargs.Argv, optionName: string,
   optionDef: xiberia.PlainObject,
   positional: boolean,
   adaptedCommand: xiberia.PlainObject,
-  callback: xiberia.IDefaultAeYargsOptionCallback): yargs.Argv {
+  callback: xiberia.IDefaultYargsOptionCallback): yargs.Argv {
   return yin;
 }
 
@@ -38,7 +41,7 @@ function YargsFailHandler (msg: string, err: Error, inst: yargs.Argv, command: a
   return inst;
 }
 
-function handlersClientAsFn (handlers: xiberia.IAeYargsInternalBuildHandlers): void {
+function handlersClientAsFn (handlers: xiberia.IYargsInternalBuildHandlers): void {
   const yin = require('yargs');
   handlers.onOption(yin, 'widget', { one: 1 }, true, { adapted: 1 }, DefaultAeYargsOptionCallback);
   handlers.onBeforeCommand(yin, 'widget description', 'help description', { adapted: 1 });
@@ -47,7 +50,7 @@ function handlersClientAsFn (handlers: xiberia.IAeYargsInternalBuildHandlers): v
 }
 
 class HandlersClientAsClass {
-  constructor (private handlers: xiberia.IAeYargsInternalBuildHandlers) { }
+  constructor (private handlers: xiberia.IYargsInternalBuildHandlers) { }
   public invoke (): void {
     const yin = require('yargs');
     this.handlers.onOption(yin, 'widget', { one: 1 }, true, { adapted: 1 }, DefaultAeYargsOptionCallback);
@@ -79,11 +82,7 @@ class XiberiaFakeCli implements xiberia.IDynamicCli<IXiberiaCli, yargs.Argv> {
       ? this.defaultCommand : commandName;
   }
 
-  create (): xiberia.ICommander {
-    throw new Error('Method not implemented.');
-  }
-
-  build (xmlContent: string, converter: xiberia.IConverter, processArgv?: string[]): yargs.Argv {
+  build (xmlContent: string, processArgv?: string[]): yargs.Argv {
     throw new Error('Method not implemented.');
   }
 
@@ -94,57 +93,71 @@ class XiberiaFakeCli implements xiberia.IDynamicCli<IXiberiaCli, yargs.Argv> {
   instance: yargs.Argv;
 }
 
+class XiberiaTestYargsBuilder implements xiberia.IYargsApiBuilder {
+  command (command: xiberia.PlainObject, optionHandler?: xiberia.IYargsOptionHandler): yargs.Argv {
+    throw new Error('Method not implemented.');
+  }
+
+  commands (container: xiberia.PlainObject, optionHandler?: xiberia.IYargsOptionHandler): yargs.Argv {
+    throw new Error('Method not implemented.');
+  }
+
+  go (instance: yargs.Argv<{}>): xiberia.PlainObject {
+    throw new Error('Method not implemented.');
+  }
+}
+
 describe('index', () => {
-  context('IDefaultAeYargsOptionCallback', () => {
-    it('can be invoked', () => {
-      const fn: xiberia.IDefaultAeYargsOptionCallback = DefaultAeYargsOptionCallback;
+  context('given: IDefaultAeYargsOptionCallback', () => {
+    it('should: can be invoked', () => {
+      const fn: xiberia.IDefaultYargsOptionCallback = DefaultAeYargsOptionCallback;
       const yin = require('yargs');
       fn(yin, 'widget', { one: 1 }, true);
     });
   });
 
-  context('IAeYargsOptionHandler', () => {
-    it('can be invoked', () => {
-      const fn: xiberia.IAeYargsOptionHandler = AeYargsOptionHandler;
+  context('given: IAeYargsOptionHandler', () => {
+    it('should: can be invoked', () => {
+      const fn: xiberia.IYargsOptionHandler = AeYargsOptionHandler;
       const yin = require('yargs');
       fn(yin, 'widget', { one: 1 }, true, { adapted: 1 }, DefaultAeYargsOptionCallback);
     });
   });
 
-  context('IAeYargsBeforeCommandHandler', () => {
-    it('can be invoked', () => {
-      const fn: xiberia.IAeYargsBeforeCommandHandler = AeYargsBeforeCommandHandler;
+  context('given: IAeYargsBeforeCommandHandler', () => {
+    it('should: can be invoked', () => {
+      const fn: xiberia.IYargsBeforeCommandHandler = AeYargsBeforeCommandHandler;
       const yin = require('yargs');
       fn(yin, 'widget description', 'help description', { adapted: 1 });
     });
   });
 
-  context('IAeYargsAfterCommandHandler', () => {
-    it('can be invoked', () => {
-      const fn: xiberia.IAeYargsAfterCommandHandler = AeYargsAfterCommandHandler;
+  context('given: IAeYargsAfterCommandHandler', () => {
+    it('should: can be invoked', () => {
+      const fn: xiberia.IYargsAfterCommandHandler = AeYargsAfterCommandHandler;
       const yin = require('yargs');
       fn(yin);
     });
   });
 
-  context('IDefaultAeYargsCommandCallback', () => {
-    it('can be invoked', () => {
-      const fn: xiberia.IDefaultAeYargsCommandCallback = DefaultAeYargsCommandCallback;
+  context('given: IDefaultAeYargsCommandCallback', () => {
+    it('should: can be invoked', () => {
+      const fn: xiberia.IDefaultYargsCommandCallback = DefaultAeYargsCommandCallback;
       const yin = require('yargs');
       fn(yin, 'get', { one: 1 });
     });
   });
 
-  context('IYargsFailHandler', () => {
-    it('can be invoked', () => {
+  context('given: IYargsFailHandler', () => {
+    it('should: can be invoked', () => {
       const fn: xiberia.IYargsFailHandler = YargsFailHandler;
       const yin = require('yargs');
       fn('error message', new Error('an error'), yin, { one: 1 });
     });
   });
 
-  context('IAeYargsInternalBuildHandlers as function', () => {
-    it('can be invoked', () => {
+  context('given: IAeYargsInternalBuildHandlers as function', () => {
+    it('should: can be invoked', () => {
       const handlers = {
         onOption: AeYargsOptionHandler,
         onBeforeCommand: AeYargsBeforeCommandHandler,
@@ -156,8 +169,8 @@ describe('index', () => {
     });
   });
 
-  context('IAeYargsInternalBuildHandlers as class', () => {
-    it('can be invoked', () => {
+  context('given: IAeYargsInternalBuildHandlers as class', () => {
+    it('should: can be invoked', () => {
       const handlers = {
         onOption: AeYargsOptionHandler,
         onBeforeCommand: AeYargsBeforeCommandHandler,
@@ -170,10 +183,17 @@ describe('index', () => {
     });
   });
 
-  context('IDynamicCli', () => {
-    it('can be instantiated', () => {
+  context('given: IDynamicCli', () => {
+    it('should: can be instantiated', () => {
       const xiberiaCli = new XiberiaFakeCli('get', ['source']);
       xiberiaCli.peek(['get', '--shape', 'triangle', '--quantity', '3']);
+    });
+  });
+
+  context('given: IYargsApiBuilder', () => {
+    it('should: can be invoked', () => {
+      const builder: xiberia.IYargsApiBuilder = new XiberiaTestYargsBuilder();
+      expect(builder).to.not.be.undefined();
     });
   });
 });
